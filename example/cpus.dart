@@ -8,5 +8,6 @@ void main() {
     print("Model: ${cpu.model}");
     print("Model Name: ${cpu.modelName}");
     print("Siblings: ${cpu.siblings}");
+    print("Load: ${cpu.getUsage()}");
   }
 }

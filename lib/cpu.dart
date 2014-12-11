@@ -29,6 +29,17 @@ class CPU {
     flags = infos["flags"].split(" ");
   }
   
+  double getUsage() {
+    var file = new File("/proc/stat");
+    var lines = file.readAsLinesSync();
+    var line = lines.firstWhere((it) => it.startsWith("cpu${processor}"));
+    var split = line.split(" ");
+    var userLoad = int.parse(split[1]);
+    var systemLoad = int.parse(split[3]);
+    var m = int.parse(split[4]);
+    return ((userLoad + systemLoad) * 100) / m;
+  }
+  
   static List<CPU> list() {
     var cpus = [];
     var info = new File("/proc/cpuinfo").readAsStringSync();
