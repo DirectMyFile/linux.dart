@@ -10,9 +10,13 @@ class DeviceClass {
   const DeviceClass(this.name);
   
   List<String> listNames() {
+    if (!new Directory("/sys/class/${name}").existsSync()) {
+      return [];
+    }
+
     return new Directory("/sys/class/${name}").listSync().where((it) => it is Directory).map((it) {
       return it.path.split("/").last;
-    });
+    }).toList();
   }
 }
 
